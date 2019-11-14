@@ -4,7 +4,7 @@ public class Activity {
 
 	private int year;
 	
-	private String nature;
+	private String nature ;
 	
 	private String title;
 	
