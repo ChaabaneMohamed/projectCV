@@ -12,31 +12,32 @@ import javax.persistence.Table;
 @Entity
 @Table(name= "Person")
 public class Person implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
+	@Column(name = "Cv")
 	ArrayList<Activity> Cv;
-	
+
 	@Column(name = "firstName")
 	private String firstName;											
-	
+
 	@Column(name = "lastName")
 	private String lastName;
-	
+
 	@Id()
 	@Column(name = "email")
 	private String email;
-	
+
 	@Column(name = "webSite")
 	private String webSite;
-	
+
 	@Column(name = "birthDate")
 	private Date birthDate; 
-	
+
 	@Column(name = "passWord")
 	private String passWord;
-	
-	
+
+
 	/// Getters AND Setters ////////////////
 
 	public String getFirstName() {
@@ -87,5 +88,12 @@ public class Person implements Serializable {
 		this.passWord = passWord;
 	}
 
+	public ArrayList<Activity> getCv() {
+		return Cv;
+	}
+
+	public void setCv(ArrayList<Activity> cv) {
+		Cv = cv;
+	}
 
 }

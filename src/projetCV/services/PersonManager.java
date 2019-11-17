@@ -1,5 +1,7 @@
 package projetCV.services;
 
+import java.util.ArrayList;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -9,6 +11,7 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import projetCV.entities.Activity;
 import projetCV.entities.Person;
 
 @Stateless
@@ -38,6 +41,7 @@ public class PersonManager {
         c.setWebSite(p.getWebSite());
         c.setBirthDate(p.getBirthDate());
         c.setPassWord(p.getPassWord());
+        c.setCv(new ArrayList<Activity>());
         em.persist(c);
     }
     
@@ -50,6 +54,11 @@ public class PersonManager {
         c.setBirthDate(p.getBirthDate());
         c.setPassWord(p.getPassWord());
         em.merge(c);
+    }
+    
+    public void createCv(Person p) {
+    	ArrayList<Activity> Cv = new ArrayList<Activity>();
+    	
     }
 
 }
