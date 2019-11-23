@@ -8,3 +8,4 @@ data/maBase\.properties
 data/maBase\.script
 
 src/projetCV/entities/Activity\.java
+/target/

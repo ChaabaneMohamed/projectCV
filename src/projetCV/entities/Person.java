@@ -3,10 +3,17 @@ package projetCV.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,9 +21,14 @@ import javax.persistence.Table;
 public class Person implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	@Column(name = "Cv")
-	ArrayList<Activity> Cv;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY	)
+	@Column(name="person_id")
+	private int id;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "person", cascade=CascadeType.ALL)
+	List<Activity> cv;
 
 	@Column(name = "firstName")
 	private String firstName;											
@@ -24,7 +36,6 @@ public class Person implements Serializable {
 	@Column(name = "lastName")
 	private String lastName;
 
-	@Id()
 	@Column(name = "email")
 	private String email;
 
@@ -88,12 +99,25 @@ public class Person implements Serializable {
 		this.passWord = passWord;
 	}
 
-	public ArrayList<Activity> getCv() {
-		return Cv;
+	public int getId() {
+		return id;
 	}
 
-	public void setCv(ArrayList<Activity> cv) {
-		Cv = cv;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public List<Activity> getCv() {
+		return cv;
+	}
+
+	public void setCv(List<Activity> cv) {
+		this.cv = cv;
+	}
+	
+	@Override
+	public String toString() {
+		return "Person: " + this.getId() + ":" + this.getFirstName() + ":" + this.getLastName() + ":" + this.getEmail() + ":" + this.getWebSite()+ ":CV="+this.getCv();  
 	}
 
 }
