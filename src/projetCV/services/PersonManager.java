@@ -1,6 +1,7 @@
 package projetCV.services;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -16,6 +17,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.Hibernate;
+
 import projetCV.entities.Activity;
 import projetCV.entities.Person;
 
@@ -26,51 +29,33 @@ public class PersonManager {
     @PersistenceContext(unitName = "myBase")
     EntityManager em;
 
-    public Person getPerson(String email) {
-        return em.find(Person.class, email);
+    public Person getPerson(int id) {
+        return em.find(Person.class, id);
     }
 
-    public void removePerson(String email) {
-    	Person c = em.find(Person.class, email);
+    public void removePerson(int id) {
+    	Person c = em.find(Person.class, id);
         if (c != null) {
             em.remove(c);
         }
     }
 
     public void createPerson(Person p) {
-        removePerson(p.getEmail());
-        Person c = new Person();
-        c.setFirstName(p.getFirstName());
-        c.setLastName(p.getLastName());
-        c.setEmail(p.getEmail());
-        c.setWebSite(p.getWebSite());
-        c.setBirthDate(p.getBirthDate());
-        c.setPassWord(p.getPassWord());
-        c.setCv(new ArrayList<Activity>());
-        em.persist(c);
+        //if(getPerson(p.getId()) == null)
+        	em.persist(p);
     }
     
-    public void updatePerson(String email, Person p) {
-        Person c = getPerson(email);
-        c.setFirstName(p.getFirstName());
-        c.setLastName(p.getLastName());
-        c.setEmail(p.getEmail());
-        c.setWebSite(p.getWebSite());
-        c.setBirthDate(p.getBirthDate());
-        c.setPassWord(p.getPassWord());
-        em.merge(c);
+    public void updatePerson(Person updatedP) {
+        em.merge(updatedP);
     }
     
-    public void createCv(Person p, ArrayList<Activity> cv) {
-    	p.setCv(cv);
-    	em.persist(em);
+    public void addActivity(Person p, Activity activity) {
+    	List<Activity> activities = p.getCv();
+    	activities.add(activity);
+    	p.setCv(activities);
+    	em.merge(p);
     }
-    
-    public void updateCv(Person p, ArrayList<Activity> cv) {
-       p.setCv(cv);
-        em.merge(p);
-    }
-    
+    		
     public List<Person> findAllPersons() {
     	CriteriaBuilder cb = em.getCriteriaBuilder();
     	CriteriaQuery<Person> cq = cb.createQuery(Person.class);
@@ -80,22 +65,39 @@ public class PersonManager {
         return allQuery.getResultList();
      }
     
+    public void removeAllPersons() {
+    	List<Person> all = findAllPersons();
+    	
+    	for (Person person : all) {
+			removePerson(person.getId());
+		}
+     }
+    
     public List<Person> searchPersons(String part) {
     	List<Person> all = findAllPersons();
     	List<Person> find = new ArrayList<Person>();
         for (Person person : all) {
+        	System.out.println(person.getFirstName() + ":" + person.getLastName()+ "/////"+ part);
 			if(person.getFirstName().contains(part)
 					|| person.getLastName().contains(part)) {
 				find.add(person);
 				break;
 			}
 			else {
-				for (Activity activity : person.getCv()) {
-					if(activity.getTitle().contains(part)) {
-						find.add(person);
-						break;
+				System.out.println("ELSE----------------------------------------");
+				if(person.getCv() != null) {
+					System.out.println("CV FOUND -----------------------------------");
+					System.out.println("NB ACT = "+ person.getCv().size());
+					for (Activity activity : person.getCv()) {
+						
+						System.out.println("|||||||||||IF "+ activity.getTitle()+ " = "+ part);
+						if(activity.getTitle().contains(part)) {
+							System.out.println("TITLE FOUND -----------------------------------");
+							find.add(person);
+							break;
+						}
+						
 					}
-					
 				}
 			} 
 		}

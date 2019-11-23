@@ -16,9 +16,9 @@ public class ConnectedUserBean implements ConnectedUser {
 	
     private String login = "";
 
-    public void login(String login, String pwd) {
+    public void login(String login, String pwd, int id) {
        
-       Person p = personManager.getPerson(login);
+       Person p = personManager.getPerson(id);
        if (p != null) {
             this.login = login;
             System.out.printf("Login user %s on %s\n", login, this);

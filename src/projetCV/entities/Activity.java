@@ -1,6 +1,28 @@
 package projetCV.entities;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "activity")
 public class Activity {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.TABLE)
+	@Column(name="activity_id")
+	private int id;
+	
+	@ManyToOne
+	@JoinColumn(name = "person_id")
+	private Person person;
 
 	private int year;
 	
@@ -12,12 +34,8 @@ public class Activity {
 	
 	private String webSite ;
 	
-	public Activity(int year, String nature, String title, String description, String webSite) {
-		this.year = year;
-		this.nature = nature;
-		this.title = title;
-		this.description = description;
-		this.webSite = webSite;
+	public Activity() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getYear() {
@@ -59,4 +77,21 @@ public class Activity {
 	public void setWebSite(String webSite) {
 		this.webSite = webSite;
 	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
 }
