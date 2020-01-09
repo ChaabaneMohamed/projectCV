@@ -26,15 +26,12 @@ public class PersonController {
 	Person p  = new Person();
 	
 	@PostConstruct
-	public void init() {
-		personManager.removeAllPersons();
-		
+	public void init() {		
 		System.out.println("Create " + this);
 		if (personManager.findAllPersons().size() == 0) {
 			personManager.removeAllPersons();
-
 			List<Activity> activities = new ArrayList<Activity>();
-
+			
 			Calendar cal = Calendar.getInstance();
 			cal.set(Calendar.YEAR, 1997);
 			cal.set(Calendar.MONTH, Calendar.NOVEMBER);
@@ -48,7 +45,7 @@ public class PersonController {
 			p.setPassWord("1234");
 			p.setCv(activities);
 			
-			save();
+			personManager.createPerson(p);
 		}
 
 	}
