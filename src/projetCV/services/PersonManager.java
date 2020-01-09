@@ -41,8 +41,11 @@ public class PersonManager {
     }
 
     public void createPerson(Person p) {
-        //if(getPerson(p.getId()) == null)
+        if(getPerson(p.getId()) != null)
+        	System.out.println("ID ALREADY EXIST ---------------------------------------");
+        else{
         	em.persist(p);
+        }
     }
     
     public void updatePerson(Person updatedP) {

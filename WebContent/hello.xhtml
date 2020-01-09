@@ -6,11 +6,12 @@
 
     <ui:composition template="/template/mylayout.xhtml">
         <ui:define name="content">
+            <f:loadBundle basename="projetCV.resources.messages_fr" var="msg" />
             <h1>
-                <h:outputText value="Hello, world" />
+                <h:outputText value="#{msg.helloWorld}" />
             </h1>
         </ui:define>
-        <ui:define name="title">Hello v2</ui:define>
+        <ui:define name="title">Hello v3</ui:define>
     </ui:composition>
 
 </html>

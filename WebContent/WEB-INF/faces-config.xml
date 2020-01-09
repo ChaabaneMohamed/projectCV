@@ -4,5 +4,12 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
       http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
-
+<navigation-rule>
+    <display-name>Home</display-name>
+    <from-view-id>/bye.xhtml</from-view-id>
+    <navigation-case>
+        <from-outcome>home</from-outcome>
+        <to-view-id>/hello.xhtml</to-view-id>
+    </navigation-case>
+</navigation-rule>
 </faces-config>
