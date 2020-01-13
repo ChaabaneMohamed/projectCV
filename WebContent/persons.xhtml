@@ -3,32 +3,61 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/template/mylayout.xhtml">
 	<ui:define name="content">
 		<f:view>
-
-			<h1>List of persons (with JSTL)</h1>
+			<h3>
+				<h:outputText rendered="#{user.logged}">
+					Bonjour, <h:outputText value="#{user.email}" />
+				</h:outputText>
+			</h3>
+			<h3>List of persons (with JSTL)</h3>
 			<h:form>
-				<table class="table">
-					<tr>
-						<th>index</th>
-						<th>firstName</th>
-						<th>email</th>
-					</tr>
-					<ui:repeat var="p" varStatus="s" value="#{person.persons}">
-						<tr>
-							<td>#{s.index}</td>
-							<td>#{p.firstName}</td>
-							<td>#{p.lastName}</td>
-						</tr>
-					</ui:repeat>
-				</table>
-				<p>
-					<h:commandButton styleClass="btn btn-success"
-						action="#{person.newPerson()}" value="New Person" />
-				</p>
+
+				<h:dataTable value="#{person.persons}" var="o"
+					styleClass="table table-hover" headerClass="danger"
+					footerClass="danger" rowClasses="success,warning">
+
+					<h:column>
+						<f:facet name="header">Number</f:facet>
+						<h:outputText value="#{o.id}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">FirstName</f:facet>
+						<h:outputText value="#{o.firstName}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">LastName</f:facet>
+						<h:outputText value="#{o.lastName}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">NB ACT</f:facet>
+						<h:outputText value="#{o.cv.size()}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Activities</f:facet>
+						<h:commandLink value="Show" styleClass="btn btn-primary btn-xs"
+							action="#{person.show(o.id)}" />
+					</h:column>
+
+					<h:column>
+						<h:outputText rendered="#{user.logged}">
+							<f:facet name="header">Edit</f:facet>
+							<h:commandLink value="Edit" styleClass="btn btn-primary btn-xs"
+								action="#{person.editPerson(o.id)}" />
+						</h:outputText>
+					</h:column>
+
+				</h:dataTable>
+				<h:outputText rendered="#{user.logged}">
+					<p>
+						<h:commandButton styleClass="btn btn-success"
+							action="#{person.newPerson()}" value="New Person" />
+					</p>
+				</h:outputText>
 			</h:form>
 
 		</f:view>

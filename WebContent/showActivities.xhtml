@@ -8,18 +8,31 @@
 <ui:composition template="/template/mylayout.xhtml">
 	<ui:define name="content">
 		<f:view>
+			<c:set var="p" value="#{person.person}" />
+			<h2>CV</h2>
+			<h4>#{p.firstName} #{p.lastName} NB ACT = #{p.cv.size()}</h4>
+
 			<ui:repeat var="a" varStatus="s" value="#{person.cv}">
+
 				<div class="jumbotron">
-					<h1>Course #{c.name}</h1>
-					<p>Id: #{c.id}</p>
-					<p>Name: #{c.name}</p>
-					<p>Hours: #{c.hours}</p>
-					<p>Description: #{c.description}</p>
-					<p>
-						<h:link outcome="hello" styleClass="btn btn-info">
-							<span>List of courses</span>
-						</h:link>
-					</p>
+					<h1>year #{a.year}</h1>
+					<p>nature: #{a.nature}</p>
+					<p>title: #{a.title}</p>
+					<p>description: #{a.description}</p>
+					<p>webSite: #{a.webSite}</p>
+					<h:form>
+						<p>
+							<h:commandLink action="editActivity" styleClass="btn btn-danger">
+								<span>Modifier</span>
+							</h:commandLink>
+						</p>
+						<h:outputText rendered="#{user.logged}">
+							<p>
+								<h:commandButton styleClass="btn btn-success"
+									action="#{person.newPerson()}" value="New Person" />
+							</p>
+						</h:outputText>
+					</h:form>
 				</div>
 			</ui:repeat>
 		</f:view>

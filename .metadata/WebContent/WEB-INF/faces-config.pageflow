@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15785629745880" configfile="/projectCV/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="Home" id="pf15785635693191" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15785635693202" path="/bye.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="hello.xhtml" id="pf15785635693203" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf15785635693202" path="/hello.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Home" x="122" y="178" id="pf15785635693191" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15785635693202" path="/bye.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="hello.xhtml" x="338" y="178" id="pf15785635693203" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf15785635693202" path="/hello.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="editPerson.xhtml" x="122" y="562" id="pf15788602808961" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" path="/hello.xhtml"/>
   <links id="pf15785635693202" target="pf15785635693203" source="pf15785635693191" outcome="home"/>
 </pageflow:Pageflow>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources>
+
+<Resource id="myBase" type="javax.sql.DataSource">
+    JdbcDriver org.hsqldb.jdbcDriver
+    JdbcUrl jdbc:hsqldb:file:/tmp/ma-bd 
+    <!-- JdbcUrl jdbc:hsqldb:mem:inMemoryDatabase-->
+    UserName sa
+    Password
+    jtaManaged true
+</Resource>
+
+</resources>

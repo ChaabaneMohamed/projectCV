@@ -1,5 +1,7 @@
 package projetCV.impl;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
@@ -10,29 +12,19 @@ import projetCV.services.PersonManager;
 
 @Stateful(name="connectedUser")
 public class ConnectedUserBean implements ConnectedUser {
-        
-	@EJB
-	private PersonManager personManager;
+
+	private Person personlogged;
 	
-    private String login = "";
+	@Override
+	public void setPersonLogged(Person person) {
+		System.out.println("PERSON LOGGED " + person.getEmail() + "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		this.personlogged = person;
+	}
 
-    public void login(String login, String pwd, int id) {
-       
-       Person p = personManager.getPerson(id);
-       if (p != null) {
-            this.login = login;
-            System.out.printf("Login user %s on %s\n", login, this);
-        }
-    }
-
-    @Remove
-    public void logout() {
-        this.login = "";
-        System.out.printf("Logout on %s\n", this);
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
+	@Override
+	public Person getPersonLogged() {
+		System.out.println("LOGGED ? = " + personlogged.getEmail()+"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		return personlogged;
+	}	
+	
 }

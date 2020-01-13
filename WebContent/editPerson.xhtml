@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/mylayout.xhtml">
+	<ui:define name="content">
+		<f:view>
+			<c:set var="p" value="#{person.person}" />
+			<h1>Person form</h1>
+			<h:form id="test">
+				<div class="form-group">
+					<label for="name">FirstName:</label>
+					<h:inputText id="name" value="#{p.firstName}"
+						styleClass="form-control" required="true"
+						requiredMessage="Le prénom est obligatoire" />
+					<h:message styleClass="label label-danger" for="name" />
+				</div>
+
+				<div class="form-group">
+					<label for="hours">LastName:</label>
+					<h:inputText id="lastName" value="#{p.lastName}"
+						styleClass="form-control" required="true"
+						requiredMessage="Le nom est obligatoire" />
+					<h:message styleClass="label label-danger" for="lastName" />
+				</div>
+
+				<div class="form-group">
+					<label for="hours">Email:</label>
+					<h:inputText id="email" value="#{p.email}"
+						styleClass="form-control" required="true"
+						requiredMessage="L'email est obligatoire" />
+					<h:message styleClass="label label-danger" for="email" />
+				</div>
+
+				<div class="form-group">
+					<label for="hours">WebSite:</label>
+					<h:inputText id="webSite" value="#{p.webSite}"
+						styleClass="form-control" required="true" />
+					<h:message styleClass="label label-danger" for="webSite" />
+				</div>
+
+				<div class="form-group">
+					<label for="birthDate">BirthDate:</label>
+					<h:inputText id="birthDate" value="#{p.birthDate}" label="Birthday">
+						<f:convertDateTime pattern="dd-MM-yyyy" required="true"
+							requiredMessage="La date de naissance est obligatoire" />
+					</h:inputText>
+					<h:message styleClass="label label-danger" for="birthDate" />
+				</div>
+
+				<div class="form-group">
+					<label for="hours">PassWord:</label>
+					<h:inputText id="passWord" value="#{p.passWord}"
+						styleClass="form-control"  required="true"
+						requiredMessage="Le mot de passe est obligatoire" />
+					<h:message styleClass="label label-danger" for="passWord" />
+				</div>
+
+
+
+				<div class="form-group">
+					<h:commandButton action="#{person.save()}"
+						styleClass="btn btn-primary" value="Save" />
+					<span> </span>
+					<h:link styleClass="btn btn-info" outcome="persons" value="Quit" />
+				</div>
+			</h:form>
+
+		</f:view>
+	</ui:define>
+</ui:composition>
+
+</html>

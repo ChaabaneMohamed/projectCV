@@ -41,6 +41,7 @@ public class PersonManager {
     }
 
     public void createPerson(Person p) {
+    	System.out.println("Person Created id = " + p.getId());
         if(getPerson(p.getId()) != null)
         	System.out.println("ID ALREADY EXIST ---------------------------------------");
         else{
@@ -53,10 +54,22 @@ public class PersonManager {
     }
     
     public void addActivity(Person p, Activity activity) {
+    	System.out.println("-------------------------ACT ADD TO Person id = " + p.getId());
     	List<Activity> activities = p.getCv();
+    	System.out.println("--------------------------NB ACT = 1 + " + activities.size());
     	activities.add(activity);
     	p.setCv(activities);
     	em.merge(p);
+    }
+    
+    public Person getByEmailAndPassword(String email, String password) {
+    	List<Person> all = findAllPersons();
+    	for (Person person : all) {
+			if(person.getEmail().equals(email) && person.getPassWord().equals(password)) {
+				return person;
+			}
+		}
+    	return null;
     }
     		
     public List<Person> findAllPersons() {
@@ -70,7 +83,7 @@ public class PersonManager {
     
     public void removeAllPersons() {
     	List<Person> all = findAllPersons();
-    	
+    	System.out.println("FOUND n person = " + all.size());
     	for (Person person : all) {
 			removePerson(person.getId());
 		}

@@ -2,9 +2,10 @@ package projetCV.services;
 
 import javax.ejb.Local;
 
+import projetCV.entities.Person;
+
 @Local
 public interface ConnectedUser {
-   void login(String login, String pwd, int id);
-   void logout();
-   String getLogin();
+   void setPersonLogged(Person person);
+   Person getPersonLogged();
 }

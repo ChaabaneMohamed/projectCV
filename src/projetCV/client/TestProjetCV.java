@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.NoSuchEJBException;
 import javax.ejb.embeddable.EJBContainer;
+import javax.faces.bean.ManagedProperty;
 import javax.ejb.NoSuchEJBException;
 
 import org.hibernate.Hibernate;
@@ -18,6 +19,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
+import monapp.PersonController;
+import monapp.UserController;
 import projetCV.entities.Activity;
 import projetCV.entities.Person;
 import projetCV.services.ConnectedUser;
@@ -27,6 +30,12 @@ public class TestProjetCV {
 
 	@EJB
     PersonManager personManager;
+	
+	@ManagedProperty("#{user}")
+	private UserController userController;
+	
+	@ManagedProperty("#{person}")
+	private PersonController personController;
 	
 	@EJB
 	ConnectedUser connectedUser;
@@ -92,6 +101,30 @@ public class TestProjetCV {
     }
     
     @Test
+    public void testAddActivity() throws Exception {
+    	personManager.createPerson(p);
+    	
+    	Activity a1 = new Activity();
+		a1.setId(0);
+		a1.setNature("nature");
+		a1.setTitle("title");
+		a1.setWebSite("webSite");
+		a1.setYear(2020);
+		
+		Activity a2 = new Activity();
+		a2.setId(1);
+		a2.setNature("nature");
+		a2.setTitle("title");
+		a2.setWebSite("webSite");
+		a2.setYear(2020);
+		
+		personManager.addActivity(p, a1);
+		personManager.addActivity(p, a2);
+    	
+    	Assertions.assertEquals(2, p.getCv().size());
+    }
+    
+    @Test
     public void testUpdatePerson() throws Exception {
     	personManager.createPerson(p);
     	String web1 = personManager.getPerson(p.getId()).toString();
@@ -112,32 +145,20 @@ public class TestProjetCV {
     
     @Test
     public void testLoginPerson() throws Exception {
-    	connectedUser.login("mohamed.chaabane@hotmail.fr", "1234", 1);
-    	connectedUser.logout();
+    	userController.setEmail("mohamed.chaabane@hotmail.fr");
+    	userController.setPassword("1234");
+    	userController.login();
+    	personController.logout();
     }
     
     @Test(expected = NoSuchEJBException.class)
     public void testLoginEJBClosed() throws Exception {
-    	connectedUser.login("mohamed.chaabane@hotmail.fr", "1234", 1);
-    	String log1 = connectedUser.getLogin();
+    	connectedUser.login("mohamed.chaabane@hotmail.fr", "1234");
+    	boolean log1 = connectedUser.isLogged();
     	connectedUser.logout();
-    	connectedUser.login("aaa.bbb@hotmail.fr", "1234", 2);
-    	String log2 = connectedUser.getLogin();
+    	connectedUser.login("aaa.bbb@hotmail.fr", "1234");
+    	boolean log2 = connectedUser.isLogged();
     	connectedUser.logout();
-    }
-    
-    @Test
-    public void testLogin2Person() throws Exception {
-    	personManager.createPerson(p);
-    	personManager.createPerson(p2);
-    	
-    	connectedUser.login("mohamed.chaabane@hotmail.fr", "1234", p.getId());
-    	String log1 = connectedUser.getLogin();
-    	connectedUser.logout();
-    	connectedUser2.login("aaa.bbb@hotmail.fr", "1234", p2.getId());
-    	String log2 = connectedUser2.getLogin();
-    	connectedUser2.logout();
-    	Assertions.assertNotEquals(log1, log2);
     }
     
     @Test
